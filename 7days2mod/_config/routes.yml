@@ -1,0 +1,13 @@
+---
+Name: 7days2mod
+After: framework/routes#coreroutes
+---
+Director:
+  rules:
+    'show': 'RepoData_Controller'
+    'Data': 'RepoData_Controller'
+    'Mods': 'RepoData_Controller'
+    '$repo/Data': 'RepoData_Controller'
+    '$repo/Mods': 'RepoData_Controller'
+    '$org/$repo/Data': 'RepoData_Controller'
+    '$org/$repo/Mods': 'RepoData_Controller'

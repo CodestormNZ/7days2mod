@@ -1,0 +1,11 @@
+---
+Name: 7days2mod
+After:
+  - 'framework/*'
+  - 'cms/*'
+---
+
+SSViewer:
+  theme: '7days2mod'
+Debug:
+  friendly_error_httpcode: true
