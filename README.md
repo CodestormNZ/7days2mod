@@ -16,7 +16,7 @@ This will create a fresh install of silverstripe for you. If you have a pre conf
 _ss_environment.php
 
 <?php  
-**define('SS_DATABASE_SERVER','localhost'); ** 
+**define('SS_DATABASE_SERVER','localhost');** 
 **define('SS_DATABASE_USERNAME','root');** //a user that has rights to create databases, root by default  
 **define('SS_DATABASE_PASSWORD','');** //the password for the above account username  
 **define('SS_DATABASE_PREFIX','');** //you can prefix text to the database name with this setting. All silverstripe DB's will also have _ss as a prefix after any setting defined here.  
