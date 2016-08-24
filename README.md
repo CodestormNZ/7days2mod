@@ -20,10 +20,8 @@ define('SS_DATABASE_SERVER','localhost');
 define('SS_DATABASE_USERNAME','root'); //a user that has rights to create databases, root by default
 define('SS_DATABASE_PASSWORD',''); //the password for the above account username
 define('SS_DATABASE_PREFIX',''); //you can prefix text to the database name with this setting. All silverstripe DB's will also have _ss as a prefix after any setting defined here.
-
 define('SS_ENVIRONMENT_TYPE','dev'); //dev, test, or live. If this is a public accessable site in production then set to live which disables some dev features like using the flush and dev/build commands
 define('SS_DATABASE_CHOOSE_NAME', true); //this will set the database name to the same as the folder where silverstripe is installed (i.e. 7days2mod)
-
 define('SS_DEFAULT_ADMIN_USERNAME',''); //set you default admin username here, this account will be used to log in to the /admin area of your site.
 define('SS_DEFAULT_ADMIN_PASSWORD',''); //set you default admin password here
 ?>
