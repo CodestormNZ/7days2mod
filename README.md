@@ -30,3 +30,5 @@ For other Available Constants visit https://docs.silverstripe.org/en/getting_sta
 If you don't have the _ss_environment.php file then you will be asked to provide information on your first view of the site.
 
 Once you have your SilverStripe installed copy the files from this repo into the folder where SilverStripe resides.  
+
+To set up your github account go to the settings tab in the admin area and enter your account details
