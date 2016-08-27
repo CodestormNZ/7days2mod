@@ -27,7 +27,7 @@ class RepoDataController extends Controller
 
     return $this->customise(new ArrayData(array(
       'Content' => nl2br(htmlentities($response)),
-    )))->renderWith("Page");
+    )))->renderWith("RepoData");
   }
   
   /*
