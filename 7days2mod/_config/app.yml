@@ -1,3 +1,6 @@
 SiteConfig:
   extensions:
     - modSiteConfig
+RepoDataController:
+  extensions:
+    - GitHubExtension

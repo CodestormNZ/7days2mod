@@ -1,86 +1,24 @@
 <?php
-/*
-class RepoData extends DataObject {
 
-  private static $db = array(
-  );
-
-  private static $has_one = array(
-  );
-}
-*/
-class RepoDataController extends Controller {
-
-  /**
-   * An array of actions that can be accessed via a request. Each array element should be an action name, and the
-   * permissions or conditions required to allow the user to access it.
-   *
-   * <code>
-   * array (
-   *     'action', // anyone can access this action
-   *     'action' => true, // same as above
-   *     'action' => 'ADMIN', // you must have ADMIN permissions to access this action
-   *     'action' => '->checkAction' // you can only access this action if $this->checkAction() returns true
-   * );
-   * </code>
-   *
-   * @var array
-   */
-  private static $allowed_actions = array (
+class RepoDataController extends Controller
+{
+  private static $allowed_actions = array(
     'showConfig',
     'showHeaders',
   );
+  
   private static $url_handlers = array(
     'headers' => 'showHeaders',
     'Config/$x1/$x2/$x3/$x4/$x5' => 'showConfig',
   );
 
-  public function init() {
+  public function init()
+  {
     parent::init();
-    // You can include any CSS or JS required by your project here.
-    // See: http://doc.silverstripe.org/framework/en/reference/requirements
-  }
-
-  
-  /*
-    GitHub Functions
-  */
-  
-  private function curlRequest($url, $header = true, $app = '7days2mod-app') {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_USERAGENT,$app);
-    if ($header) {
-      curl_setopt($ch, CURLOPT_VERBOSE, 1);
-      curl_setopt($ch, CURLOPT_HEADER, 1);
-    }
-    
-    $config = SiteConfig::current_site_config(); 
-    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($ch, CURLOPT_USERPWD, $config->gituser.":".$config->gitpwd);
-    
-    $response = curl_exec($ch);
-    curl_close($ch);
-    
-    return $response;
   }
   
-  private function getGitHubContent($file_path = '', $org = '7days2mod', $repo = 'Vanilla') {
-    $repo_url = 'https://api.github.com/repos/'.$org.'/'.$repo.'/contents/';
-    $url = $repo_url.$file_path;
-    
-    $response = $this->curlrequest($url, false);
-//    $parts = explode("\r\n\r\nHTTP/", $response);
-//    $parts = (count($parts) > 1 ? 'HTTP/' : '').array_pop($parts);
-//    list($headers, $body) = explode("\r\n\r\n", $parts, 2);
-    $responseData = json_decode($response);
-    
-    return $responseData;
-  }
-
-  public function showHeaders() {
+  public function showHeaders()
+  {
     $url = 'https://api.github.com/orgs/7days2mod';
     
     $response = $this->curlrequest($url);
@@ -89,13 +27,13 @@ class RepoDataController extends Controller {
       'Content' => nl2br(htmlentities($response)),
     )))->renderWith("Page");
   }
-
   
   /*
     Data Functions
   */
   
-  public function showConfig() {
+  public function showConfig()
+  {
     $url_path = $this->getRequest()->getURL();
     $org = '7days2mod';
     $repo = 'Vanilla';
@@ -123,6 +61,5 @@ class RepoDataController extends Controller {
       'Content' => $content,
     )))->renderWith("RepoData");
   }
-
 
 }
