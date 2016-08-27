@@ -20,8 +20,10 @@ class RepoDataController extends Controller
   public function showHeaders()
   {
     $url = 'https://api.github.com/orgs/7days2mod';
-    
-    $response = $this->curlrequest($url);
+
+    $config = SiteConfig::current_site_config();
+    $curl = new CurlRequest($config->gituser, $config->gitpwd);
+    $response = $curl->Request($url, true);
 
     return $this->customise(new ArrayData(array(
       'Content' => nl2br(htmlentities($response)),

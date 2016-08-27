@@ -1,6 +1,6 @@
 <?php
 
-class modSiteConfig extends DataExtension
+class GitHubAuthSiteConfigExtension extends DataExtension
 {
     private static $db = array(
         'gituser' => 'Text',
