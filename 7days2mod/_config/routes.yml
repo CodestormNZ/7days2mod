@@ -4,10 +4,10 @@ After: framework/routes#coreroutes
 ---
 Director:
   rules:
-    'show': 'RepoData_Controller'
-    'Data': 'RepoData_Controller'
-    'Mods': 'RepoData_Controller'
-    '$repo/Data': 'RepoData_Controller'
-    '$repo/Mods': 'RepoData_Controller'
-    '$org/$repo/Data': 'RepoData_Controller'
-    '$org/$repo/Mods': 'RepoData_Controller'
+    'show': 'RepoDataController'
+    'Data': 'RepoDataController'
+    'Mods': 'RepoDataController'
+    '$repo/Data': 'RepoDataController'
+    '$repo/Mods': 'RepoDataController'
+    '$org/$repo/Data': 'RepoDataController'
+    '$org/$repo/Mods': 'RepoDataController'

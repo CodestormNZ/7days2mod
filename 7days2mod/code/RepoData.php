@@ -1,14 +1,15 @@
 <?php
-class RepoData extends SiteTree {
+/*
+class RepoData extends DataObject {
 
   private static $db = array(
   );
 
   private static $has_one = array(
   );
-
 }
-class RepoData_Controller extends ContentController {
+*/
+class RepoDataController extends Controller {
 
   /**
    * An array of actions that can be accessed via a request. Each array element should be an action name, and the
@@ -26,12 +27,12 @@ class RepoData_Controller extends ContentController {
    * @var array
    */
   private static $allowed_actions = array (
-    'showconfig',
-    'showheaders',
+    'showConfig',
+    'showHeaders',
   );
   private static $url_handlers = array(
-    'headers' => 'showheaders',
-    'Config/$x1/$x2/$x3/$x4/$x5' => 'showconfig',
+    'headers' => 'showHeaders',
+    'Config/$x1/$x2/$x3/$x4/$x5' => 'showConfig',
   );
 
   public function init() {
@@ -45,7 +46,7 @@ class RepoData_Controller extends ContentController {
     GitHub Functions
   */
   
-  private function curl_request($url, $header = true, $app = '7days2mod-app') {
+  private function curlRequest($url, $header = true, $app = '7days2mod-app') {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -66,11 +67,11 @@ class RepoData_Controller extends ContentController {
     return $response;
   }
   
-  private function get_github_content($file_path = '', $org = '7days2mod', $repo = 'Vanilla') {
+  private function getGitHubContent($file_path = '', $org = '7days2mod', $repo = 'Vanilla') {
     $repo_url = 'https://api.github.com/repos/'.$org.'/'.$repo.'/contents/';
     $url = $repo_url.$file_path;
     
-    $response = $this->curl_request($url, false);
+    $response = $this->curlrequest($url, false);
 //    $parts = explode("\r\n\r\nHTTP/", $response);
 //    $parts = (count($parts) > 1 ? 'HTTP/' : '').array_pop($parts);
 //    list($headers, $body) = explode("\r\n\r\n", $parts, 2);
@@ -79,10 +80,10 @@ class RepoData_Controller extends ContentController {
     return $responseData;
   }
 
-  public function showheaders() {
+  public function showHeaders() {
     $url = 'https://api.github.com/orgs/7days2mod';
     
-    $response = $this->curl_request($url);
+    $response = $this->curlrequest($url);
 
     return $this->customise(new ArrayData(array(
       'Content' => nl2br(htmlentities($response)),
@@ -94,7 +95,7 @@ class RepoData_Controller extends ContentController {
     Data Functions
   */
   
-  public function showconfig() {
+  public function showConfig() {
     $url_path = $this->getRequest()->getURL();
     $org = '7days2mod';
     $repo = 'Vanilla';
@@ -111,7 +112,7 @@ class RepoData_Controller extends ContentController {
     }
     $file_path = str_replace(" ", "%20", $file_path);
     
-    $responseData = $this->get_github_content($file_path, $org, $repo);
+    $responseData = $this->getGitHubContent($file_path, $org, $repo);
     if (isset($responseData->content)) {
       $content = htmlentities(base64_decode($responseData->content));
     } else {
