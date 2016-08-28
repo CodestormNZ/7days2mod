@@ -4,3 +4,6 @@ SiteConfig:
 RepoDataController:
   extensions:
     - GitHubExtension
+GitHubRepoController:
+  extensions:
+    - GitHubExtension

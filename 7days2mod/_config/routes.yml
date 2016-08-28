@@ -4,7 +4,7 @@ After: framework/routes#coreroutes
 ---
 Director:
   rules:
-    'show': 'RepoDataController'
+    'orgs': 'GitHubRepoController'
     'Data': 'RepoDataController'
     'Mods': 'RepoDataController'
     '$repo/Data': 'RepoDataController'
