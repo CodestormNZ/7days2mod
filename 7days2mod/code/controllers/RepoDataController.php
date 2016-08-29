@@ -12,6 +12,8 @@ class RepoDataController extends Controller
     'Config/$file/code' => 'showCodemirror',
     'Config/$folder/$file/gui' => 'showGUI',
     'Config/$file/gui' => 'showGUI',
+//    'Config/$folder/!$file' => 'showGUI', //does not match on Config/XUi/filename.xml !!!!!!!!!
+//    'Config/$file' => 'showGUI',
   );
 
   public function init()
