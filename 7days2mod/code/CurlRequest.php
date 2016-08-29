@@ -4,20 +4,22 @@ class CurlRequest
 {
   private $user;
   private $pwd;
+  private $app;
   
-  public function __construct ($user = '', $pwd = '')
+  public function __construct ($app, $user = '', $pwd = '')
   {
+    $this->app = $app;
     $this->user = $user;
     $this->pwd = $pwd;
   }
   
-  public function Request($url, $showheaders = false, $app = '7days2mod-app')
+  public function Request($url, $showheaders = false)
   {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_USERAGENT,$app);
+    curl_setopt($ch, CURLOPT_USERAGENT,$this->app);
     if ($showheaders) {
       curl_setopt($ch, CURLOPT_VERBOSE, 1);
       curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -33,5 +35,4 @@ class CurlRequest
     
     return $response;
   }
-  
 }

@@ -2,13 +2,25 @@
 
 class GitHubExtension extends Extension
 {
+  const APIURL = 'https://api.github.com/';
+  const APPNAME = '7days2mod-app';
+  private $githubUser;
+  private $githubPwd;
+  
+  public function __construct()
+  {
+    parent::__construct();
+    $config = SiteConfig::current_site_config();
+    $this->githubUser = $config->gituser;
+    $this->githubPwd = $config->gitpwd;
+  }
+  
   public function getGitHubContent($file_path = '', $org = '7days2mod', $repo = 'Vanilla')
   {
-    $repo_url = 'https://api.github.com/repos/'.$org.'/'.$repo.'/contents/';
+    $repo_url = self::APIURL.'repos/'.$org.'/'.$repo.'/contents/';
     $url = $repo_url.$file_path;
     
-    $config = SiteConfig::current_site_config();
-    $curl = new CurlRequest($config->gituser, $config->gitpwd);
+    $curl = new CurlRequest(self::APPNAME, $this->githubUser, $this->githubPwd);
     $response = $curl->Request($url);
     $responseData = json_decode($response);
     
@@ -20,10 +32,9 @@ class GitHubExtension extends Extension
     if (null === $org) {
       $org = '7days2mod';
     }
-    $url = str_replace("{org}", $org, $url);
+    $url = self::APIURL.str_replace("{org}", $org, $url);
 
-    $config = SiteConfig::current_site_config();
-    $curl = new CurlRequest($config->gituser, $config->gitpwd);
+    $curl = new CurlRequest(self::APPNAME, $this->githubUser, $this->githubPwd);
     $response = $curl->Request($url, $showheaders);
 
     if ($showheaders) {

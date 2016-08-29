@@ -4,11 +4,9 @@ class RepoDataController extends Controller
 {
   private static $allowed_actions = array(
     'showConfig',
-    'showHeaders',
   );
   
   private static $url_handlers = array(
-    'headers' => 'showHeaders',
     'Config/$x1/$x2/$x3/$x4/$x5' => 'showConfig',
   );
 
@@ -16,23 +14,6 @@ class RepoDataController extends Controller
   {
     parent::init();
   }
-  
-  public function showHeaders()
-  {
-    $url = 'https://api.github.com/orgs/7days2mod';
-
-    $config = SiteConfig::current_site_config();
-    $curl = new CurlRequest($config->gituser, $config->gitpwd);
-    $response = $curl->Request($url, true);
-
-    return $this->customise(new ArrayData(array(
-      'Content' => nl2br(htmlentities($response)),
-    )))->renderWith("RepoData");
-  }
-  
-  /*
-    Data Functions
-  */
   
   public function showConfig()
   {
@@ -58,10 +39,16 @@ class RepoDataController extends Controller
     } else {
       $content = "File not found in repo: ".$file_path;
     }
+
+    if (null !== $this->getRequest()->getVar('view')) {
+      $view = "_".$this->getRequest()->getVar('view');
+    } else {
+      $view = '';
+    }
     
     return $this->customise(new ArrayData(array(
       'Content' => $content,
-    )))->renderWith("RepoData");
+    )))->renderWith("RepoData".$view);
   }
 
 }

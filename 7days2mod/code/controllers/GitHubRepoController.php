@@ -17,11 +17,9 @@ class GitHubRepoController extends Controller
     parent::init();
   }
   
-
-  
   public function showOrganisation()
   {
-    $url = 'https://api.github.com/orgs/{org}';
+    $url = 'orgs/{org}';
     list($headers, $details) = $this->getGitHubOrgRequest($url, $this->getRequest()->param('org'), true);
     
     $details = get_object_vars(json_decode($details));
@@ -36,7 +34,7 @@ class GitHubRepoController extends Controller
   
   public function showRepos()
   {
-    $url = 'https://api.github.com/orgs/{org}/repos';
+    $url = 'orgs/{org}/repos';
     list($headers, $details) = $this->getGitHubOrgRequest($url, $this->getRequest()->param('org'));
     
     $details = json_decode($details);
