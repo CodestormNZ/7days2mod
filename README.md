@@ -36,37 +36,35 @@ To set up your github account go to the settings tab in the admin area and enter
 
 
 ##PROJECT TODO LIST
-Views  
-  Codemirror View  
-    *View Code  
-    *Line Numbers  
-    *Code Folding  
-    *Text Highlighting  
-    Clean Code Option  
-    Compare Option  
-      Show Diff  
-      Fine Grained Merge  
-    Save Changes Option  
-  XML Nodelist View  
-    List all unique nodes  
-    Run xpath query on node  
-  GUI View  
-    table definition system  
-  Compiled View  
-    Prefabs list  
-  Detailed View  
-  GUI Edit View  
-  Table Text Edit View  
-  
-  
-Cache system  
-  Use github lookup to check for updates  
-  Send data to DB  
-  
-  
-GitHub integration  
-  create repo  
-  fork repo  
-  send commit  
-  send pull request  
-  merge pull request  
+* Views  
+  * Codemirror View  
+    * View Code  
+    * Line Numbers  
+    * Code Folding  
+    * Text Highlighting  
+    * Clean Code Option  
+    * Compare Option  
+      * Show Diff  
+      * Fine Grained Merge  
+    * Save Changes Option  
+  * XML Nodelist View  
+    * List all unique nodes  
+    * Run xpath query on node  
+  * GUI View  
+    * table definition system  
+  * Compiled View  
+    * Prefabs list  
+  * Detailed View  
+  * GUI Edit View  
+  * Table Text Edit View  
+
+* Cache system  
+  * Use github lookup to check for updates  
+  * Send data to DB  
+
+* GitHub integration  
+  * create repo  
+  * fork repo  
+  * send commit  
+  * send pull request  
+  * merge pull request  
