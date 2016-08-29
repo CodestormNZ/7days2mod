@@ -4,14 +4,14 @@ class RepoDataController extends Controller
 {
   private static $allowed_actions = array(
     'showCodemirror',
-    'showConfig',
+    'showGUI',
   );
   
   private static $url_handlers = array(
     'Config/$folder/$file/code' => 'showCodemirror',
     'Config/$file/code' => 'showCodemirror',
-    'Config/$folder/$file/gui' => 'showConfig',
-    'Config/$file/gui' => 'showConfig',
+    'Config/$folder/$file/gui' => 'showGUI',
+    'Config/$file/gui' => 'showGUI',
   );
 
   public function init()
@@ -31,6 +31,7 @@ class RepoDataController extends Controller
     $params->org = '7days2mod';
     $params->repo = 'Vanilla';
     $params->folder = 'Data/Config/';
+    $params->extension = '';
     if (null !== $this->getRequest()->param('org')) {
       $params->org = $this->getRequest()->param('org');
     }
@@ -40,13 +41,16 @@ class RepoDataController extends Controller
     if (null !== $this->getRequest()->param('folder')) {
       $params->folder = $params->folder.$this->getRequest()->param('folder')."/";
     }
-    $params->file = $this->getRequest()->param('file');
+    if (null !== $this->getRequest()->getExtension()) {
+      $params->extension = ".".$this->getRequest()->getExtension();
+    }
+    $params->file = $this->getRequest()->param('file').$params->extension;
     $params->file_path = str_replace(" ", "%20", $params->folder.$params->file);
     
     return $params;
   }
   
-  public function showConfig()
+  public function showGUI()
   {
     $params = $this->loadConfigParams();
     $responseData = $this->getGitHubContent($params->file_path, $params->org, $params->repo);
