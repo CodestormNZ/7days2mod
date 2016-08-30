@@ -13,6 +13,8 @@ class DataController extends Controller
     'Config/$file/gui' => 'showGUI',
     'Config/$folder/$file/code' => 'showCodemirror',
     'Config/$file/code' => 'showCodemirror',
+    'Config/$folder/$file/node' => 'showNode',
+    'Config/$file/node' => 'showNode',
 //    'Config/$folder/!$file' => 'showGUI', //does not match on Config/XUi/filename.xml !!!!!!!!!
 //    'Config/$file' => 'showGUI',
   );
@@ -110,6 +112,73 @@ CSS;
     return $this->customise(new ArrayData(array(
       'Content' => $content,
     )))->renderWith("RepoData_code");
+  }
+
+  private function childnodes($nodes, &$unique) {
+    foreach($nodes as $node) {
+      if ($node->nodeName == "#text") {
+      } else {
+        foreach ($node->attributes as $attr) {
+          $text = $attr->getNodePath();
+          $text = preg_replace("/\[.*?\]/","",$text);
+          if (isset($unique[$text])) {
+            $unique[$text] += 1;
+          } else {
+            $unique[$text] = 1;
+          }
+        }
+        $this->childnodes($node->childNodes, $unique);
+      }
+    }
+  }
+
+
+  public function showNode()
+  {
+    $params = $this->loadConfigParams();
+    $responseData = $this->getGitHubContent($params->file_path, $params->org, $params->repo);
+    if (isset($responseData->content)) {
+      //Generate Nodelist
+      $xml = base64_decode($responseData->content);
+      $doc = new \DOMDocument('1.0', 'UTF-8');
+      $doc->preserveWhiteSpace = false;
+      $doc->formatOutput = true;
+      $doc->loadXML($xml);
+      $xpath = new DOMXpath($doc);
+      $text_nodes = $xpath->query('//text()');
+      foreach ($text_nodes as $text_node) {
+        $text_node->deleteData(0, $text_node->length+1);
+      }
+      
+      $nodes = $xpath->query('/*');
+      $unique = array();
+      foreach($nodes as $node) {
+        if ($node->nodeName == "#text") {
+        } else {
+          foreach ($node->attributes as $attr) {
+            $text = preg_replace("/\[.*?\]/","",$attr->getNodePath());
+            if (isset($unique[$text])) {
+              $unique[$text] += 1;
+            } else {
+              $unique[$text] = 1;
+            }
+          }
+          $this->childnodes($node->childNodes, $unique);
+        }
+      }
+      $content = "";
+      ksort($unique);
+
+      
+      $content = var_export($unique, true);
+      
+    } else {
+      $content = "File not found in repo: ".$params->file_path;
+    }
+    
+    return $this->customise(new ArrayData(array(
+      'Content' => $content,
+    )))->renderWith("RepoData_node");
   }
 
 }
