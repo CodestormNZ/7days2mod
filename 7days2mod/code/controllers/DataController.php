@@ -114,20 +114,20 @@ CSS;
     )))->renderWith("RepoData_code");
   }
 
-  private function childnodes($nodes, &$unique) {
+  private function childnodes($nodes, &$uniqueNodes) {
     foreach($nodes as $node) {
       if ($node->nodeName == "#text") {
       } else {
         foreach ($node->attributes as $attr) {
           $text = $attr->getNodePath();
           $text = preg_replace("/\[.*?\]/","",$text);
-          if (isset($unique[$text])) {
-            $unique[$text] += 1;
+          if (isset($uniqueNodes[$text])) {
+            $uniqueNodes[$text] += 1;
           } else {
-            $unique[$text] = 1;
+            $uniqueNodes[$text] = 1;
           }
         }
-        $this->childnodes($node->childNodes, $unique);
+        $this->childnodes($node->childNodes, $uniqueNodes);
       }
     }
   }
@@ -135,10 +135,10 @@ CSS;
 
   public function showNode()
   {
+    $content = '';
     $params = $this->loadConfigParams();
     $responseData = $this->getGitHubContent($params->file_path, $params->org, $params->repo);
     if (isset($responseData->content)) {
-      //Generate Nodelist
       $xml = base64_decode($responseData->content);
       $doc = new \DOMDocument('1.0', 'UTF-8');
       $doc->preserveWhiteSpace = false;
@@ -151,33 +151,34 @@ CSS;
       }
       
       $nodes = $xpath->query('/*');
-      $unique = array();
+      $uniqueNodes = array();
       foreach($nodes as $node) {
         if ($node->nodeName == "#text") {
         } else {
           foreach ($node->attributes as $attr) {
             $text = preg_replace("/\[.*?\]/","",$attr->getNodePath());
-            if (isset($unique[$text])) {
-              $unique[$text] += 1;
+            if (isset($uniqueNodes[$text])) {
+              $uniqueNodes[$text] += 1;
             } else {
-              $unique[$text] = 1;
+              $uniqueNodes[$text] = 1;
             }
           }
-          $this->childnodes($node->childNodes, $unique);
+          $this->childnodes($node->childNodes, $uniqueNodes);
         }
       }
-      $content = "";
-      ksort($unique);
-
-      
-      $content = var_export($unique, true);
-      
+      ksort($uniqueNodes);
     } else {
       $content = "File not found in repo: ".$params->file_path;
     }
+    foreach ($uniqueNodes as $node=>$count) {
+      $content .= $this->customise(new ArrayData(array(
+        'Node' => $node,
+        'Count' => $count,
+      )))->renderWith("RepoData_node_line");
+    }
     
     return $this->customise(new ArrayData(array(
-      'Content' => $content,
+      'uniqueNodes' => $content,
     )))->renderWith("RepoData_node");
   }
 
