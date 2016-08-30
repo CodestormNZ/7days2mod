@@ -2,18 +2,22 @@
 
 ##Silverstripe and Github Edition
 
-This version of the 7days2mod.com website isbeing developed using the silverstripe framework and integrates with GitHub for mod storage.
+This version of the 7days2mod.com website is being developed using the silverstripe framework and integrates with GitHub for mod storage.
 
 To install you first need to set up a copy of silverstripe  
 Install Composer first, then navigate to the parent folder of where you want to framework to be installed.  
 Your web server should be configured to serve files from the 7days2mod folder that will be created with the composer create-project as shown below.
 
 At the command prompt, type:  
-**composer create-project silverstripe/installer 7days2mod**
+```
+composer create-project silverstripe/installer 7days2mod
+```
 
 This will create a fresh install of silverstripe for you. If you have a pre configured _ss_environment.php in the folder that 7days2mod resides in then you can skip the install steps as the database and default admin user will be created when you first view a page of the new site.
 
-**_ss_environment.php**
+```
+_ss_environment.php
+```
 
 	<?php  
 		define('SS_DATABASE_SERVER','localhost');  
