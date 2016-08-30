@@ -1,9 +1,9 @@
 SiteConfig:
   extensions:
     - GitHubAuthSiteConfigExtension
-RepoDataController:
+DataController:
   extensions:
     - GitHubExtension
-GitHubRepoController:
+OrgController:
   extensions:
     - GitHubExtension

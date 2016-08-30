@@ -1,17 +1,18 @@
 <?php
 
-class RepoDataController extends Controller
+class DataController extends Controller
 {
   private static $allowed_actions = array(
-    'showCodemirror',
     'showGUI',
+    'showCodemirror',
+    'showNode',
   );
   
   private static $url_handlers = array(
-    'Config/$folder/$file/code' => 'showCodemirror',
-    'Config/$file/code' => 'showCodemirror',
     'Config/$folder/$file/gui' => 'showGUI',
     'Config/$file/gui' => 'showGUI',
+    'Config/$folder/$file/code' => 'showCodemirror',
+    'Config/$file/code' => 'showCodemirror',
 //    'Config/$folder/!$file' => 'showGUI', //does not match on Config/XUi/filename.xml !!!!!!!!!
 //    'Config/$file' => 'showGUI',
   );
@@ -21,7 +22,6 @@ class RepoDataController extends Controller
     parent::init();
     Requirements::javascript("framework/thirdparty/jquery/jquery.js");
     Requirements::javascript("themes/7days2mod/javascript/script.js");
-    
     Requirements::css("themes/7days2mod/css/reset.css");
     Requirements::css("themes/7days2mod/css/typography.css");
     Requirements::css("themes/7days2mod/css/form.css");
@@ -66,6 +66,7 @@ class RepoDataController extends Controller
       'Content' => $content,
     )))->renderWith("RepoData_gui");
   }
+  
   public function showCodemirror()
   {
     $params = $this->loadConfigParams();

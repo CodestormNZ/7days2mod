@@ -1,6 +1,6 @@
 <?php
 
-class GitHubRepoController extends Controller
+class OrgController extends Controller
 {
   private static $allowed_actions = array(
     'showOrganisation',

@@ -4,10 +4,10 @@ After: framework/routes#coreroutes
 ---
 Director:
   rules:
-    'orgs': 'GitHubRepoController'
-    'Data': 'RepoDataController'
-    'Mods': 'RepoDataController'
-    '$repo/Data': 'RepoDataController'
-    '$repo/Mods': 'RepoDataController'
-    '$org/$repo/Data': 'RepoDataController'
-    '$org/$repo/Mods': 'RepoDataController'
+    'orgs': 'OrgController'
+    'Data': 'DataController'
+    'Mods': 'DataController'
+    '$repo/Data': 'DataController'
+    '$repo/Mods': 'DataController'
+    '$org/$repo/Data': 'DataController'
+    '$org/$repo/Mods': 'DataController'
